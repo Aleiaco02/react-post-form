@@ -129,7 +129,7 @@ const Form = () => {
             {/* BONUS parte alert di richiesta inoltrata correttamente */}
             {showAlert && (
                 <div className="mt-4 p-3 bg-green-500 rounded shadow">
-                    Form inviato con successo!
+                    Articolo creato correttamente
                 </div>
             )}
         </form>
