@@ -5,7 +5,7 @@ const Form = () => {
         author: "",
         title: "",
         body: "",
-        pubblic: "",
+        public: false
     });
 
     const handleChange = (e) => {
@@ -19,19 +19,35 @@ const Form = () => {
         }
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post("https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts", formData)
+            .then(res => {
+                console.log(res.data);
+                setFormData({
+                    author: "",
+                    title: "",
+                    body: "",
+                    public: false
+                });
+            })
+            .catch(error => console.log("error"))
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             {/* parte nome autore */}
             <div className="my-4 mx-5">
                 <label htmlFor="author" className="form-label">
                     Nome Autore
                 </label>
                 <input
+                    name="author"
                     type="text"
                     className="form-control"
                     id="author"
                     aria-describedby="authorlHelp"
-                    value={formData.name}
+                    value={formData.author}
                     onChange={handleChange}
                 />
                 <div id="authorlHelp" className="form-text">
@@ -45,10 +61,13 @@ const Form = () => {
                     Titolo
                 </label>
                 <input
+                    name="title"
                     type="text"
                     className="form-control"
                     id="title"
                     aria-describedby="titlelHelp"
+                    value={formData.title}
+                    onChange={handleChange}
                 />
                 <div id="titlelHelp" className="form-text">
                     Inserisci il titolo del post
@@ -61,10 +80,13 @@ const Form = () => {
                     Contenuto
                 </label>
                 <textarea
+                    name="body"
                     className="form-control"
                     id="text-area"
                     rows="3"
                     aria-describedby="textAreaHelp"
+                    value={formData.body}
+                    onChange={handleChange}
                 ></textarea>
                 <div id="textAreaHelp" className="form-text">
                     Inserisci il contenuto del post
@@ -74,9 +96,12 @@ const Form = () => {
             {/* parte della checkbox */}
             <div className="my-4 mx-5 form-check">
                 <input
+                    name="public"
                     type="checkbox"
                     className="form-check-input"
                     id="checkBox"
+                    checked={formData.public}
+                    onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="checkBox">
                     Pubblica sul blog
@@ -84,7 +109,11 @@ const Form = () => {
             </div>
 
             {/* parte bottone invia form */}
-            <button type="submit" className="my-4 mx-5 btn btn-primary">
+            <button
+                type="submit"
+                className="my-4 mx-5 btn btn-primary"
+
+            >
                 Invia
             </button>
         </form>
