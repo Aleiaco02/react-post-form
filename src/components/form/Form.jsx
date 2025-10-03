@@ -8,8 +8,9 @@ const Form = () => {
         public: false
     });
 
-    const handleChange = (e) => {
+    const [showAlert, setShowAlert] = useState(false);
 
+    const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
         if (type === "checkbox") {
@@ -30,6 +31,12 @@ const Form = () => {
                     body: "",
                     public: false
                 });
+
+                setShowAlert(true);
+
+                setTimeout(() => {
+                    setShowAlert(false);
+                }, 3000);
             })
             .catch(error => console.log("error"))
     }
@@ -49,6 +56,7 @@ const Form = () => {
                     aria-describedby="authorlHelp"
                     value={formData.author}
                     onChange={handleChange}
+                    required
                 />
                 <div id="authorlHelp" className="form-text">
                     Inserisci il nome dell'autore del post
@@ -68,6 +76,7 @@ const Form = () => {
                     aria-describedby="titlelHelp"
                     value={formData.title}
                     onChange={handleChange}
+                    required
                 />
                 <div id="titlelHelp" className="form-text">
                     Inserisci il titolo del post
@@ -87,6 +96,7 @@ const Form = () => {
                     aria-describedby="textAreaHelp"
                     value={formData.body}
                     onChange={handleChange}
+                    required
                 ></textarea>
                 <div id="textAreaHelp" className="form-text">
                     Inserisci il contenuto del post
@@ -112,10 +122,16 @@ const Form = () => {
             <button
                 type="submit"
                 className="my-4 mx-5 btn btn-primary"
-
             >
                 Invia
             </button>
+
+            {/* BONUS parte alert di richiesta inoltrata correttamente */}
+            {showAlert && (
+                <div className="mt-4 p-3 bg-green-500 rounded shadow">
+                    Form inviato con successo!
+                </div>
+            )}
         </form>
     );
 };
