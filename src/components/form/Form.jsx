@@ -1,12 +1,14 @@
 import { useState } from "react";
 
+const initialFormData = {
+    author: "",
+    title: "",
+    body: "",
+    public: false
+};
+
 const Form = () => {
-    const [formData, setFormData] = useState({
-        author: "",
-        title: "",
-        body: "",
-        public: false
-    });
+    const [formData, setFormData] = useState(initialFormData);
 
     const [showAlert, setShowAlert] = useState(false);
 
@@ -25,12 +27,7 @@ const Form = () => {
         axios.post("https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts", formData)
             .then(res => {
                 console.log(res.data);
-                setFormData({
-                    author: "",
-                    title: "",
-                    body: "",
-                    public: false
-                });
+                setFormData(initialFormData);
 
                 setShowAlert(true);
 
